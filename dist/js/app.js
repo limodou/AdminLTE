@@ -7,7 +7,7 @@
  * @Author  Almsaeed Studio
  * @Support <http://www.almsaeedstudio.com>
  * @Email   <support@almsaeedstudio.com>
- * @version 2.3.3
+ * @version 2.3.5
  * @license MIT <http://opensource.org/licenses/MIT>
  */
 
@@ -62,7 +62,7 @@ $.AdminLTE.options = {
   //native touch experience with touch devices. If you
   //choose to enable the plugin, make sure you load the script
   //before AdminLTE's app.js
-  enableFastclick: true,
+  enableFastclick: false,
   //Control Sidebar Options
   enableControlSidebar: true,
   controlSidebarOptions: {
@@ -146,8 +146,8 @@ $(function () {
   //Extend options if external options exist
   if (typeof AdminLTEOptions !== "undefined") {
     $.extend(true,
-        $.AdminLTE.options,
-        AdminLTEOptions);
+      $.AdminLTE.options,
+      AdminLTEOptions);
   }
 
   //Easy access to options
@@ -350,8 +350,8 @@ function _init() {
 
       //Enable expand on hover for sidebar mini
       if ($.AdminLTE.options.sidebarExpandOnHover
-          || ($('body').hasClass('fixed')
-          && $('body').hasClass('sidebar-mini'))) {
+        || ($('body').hasClass('fixed')
+        && $('body').hasClass('sidebar-mini'))) {
         this.expandOnHover();
       }
     },
@@ -361,14 +361,14 @@ function _init() {
       //Expand sidebar on hover
       $('.main-sidebar').hover(function () {
         if ($('body').hasClass('sidebar-mini')
-            && $("body").hasClass('sidebar-collapse')
-            && $(window).width() > screenWidth) {
+          && $("body").hasClass('sidebar-collapse')
+          && $(window).width() > screenWidth) {
           _this.expand();
         }
       }, function () {
         if ($('body').hasClass('sidebar-mini')
-            && $('body').hasClass('sidebar-expanded-on-hover')
-            && $(window).width() > screenWidth) {
+          && $('body').hasClass('sidebar-expanded-on-hover')
+          && $(window).width() > screenWidth) {
           _this.collapse();
         }
       });
@@ -473,7 +473,7 @@ function _init() {
         e.preventDefault();
         //If the sidebar is not open
         if (!sidebar.hasClass('control-sidebar-open')
-            && !$('body').hasClass('control-sidebar-open')) {
+          && !$('body').hasClass('control-sidebar-open')) {
           //Open the sidebar
           _this.open(sidebar, o.slide);
         } else {
@@ -519,9 +519,13 @@ function _init() {
       if ($("body").hasClass('layout-boxed')) {
         sidebar.css('position', 'absolute');
         sidebar.height($(".wrapper").height());
+        if (_this.hasBindedResize) {
+          return;
+        }
         $(window).resize(function () {
           _this._fix(sidebar);
         });
+        _this.hasBindedResize = true;
       } else {
         sidebar.css({
           'position': 'fixed',
@@ -581,8 +585,8 @@ function _init() {
       if (!box.hasClass("collapsed-box")) {
         //Convert minus into plus
         element.children(":first")
-            .removeClass(_this.icons.collapse)
-            .addClass(_this.icons.open);
+          .removeClass(_this.icons.collapse)
+          .addClass(_this.icons.open);
         //Hide the content
         box_content.slideUp(_this.animationSpeed, function () {
           box.addClass("collapsed-box");
@@ -590,8 +594,8 @@ function _init() {
       } else {
         //Convert plus into minus
         element.children(":first")
-            .removeClass(_this.icons.open)
-            .addClass(_this.icons.collapse);
+          .removeClass(_this.icons.open)
+          .addClass(_this.icons.collapse);
         //Show the content
         box_content.slideDown(_this.animationSpeed, function () {
           box.removeClass("collapsed-box");
@@ -690,7 +694,7 @@ function _init() {
 
 })(jQuery);
 
- /*
+/*
  * EXPLICIT BOX CONTROLS
  * -----------------------
  * This is a custom plugin to use with the component BOX. It allows you to activate
@@ -709,12 +713,12 @@ function _init() {
     $.AdminLTE.boxWidget.activate(this);
   };
 
-  $.fn.toggleBox = function(){
+  $.fn.toggleBox = function () {
     var button = $($.AdminLTE.boxWidget.selectors.collapse, this);
     $.AdminLTE.boxWidget.collapse(button);
   };
 
-  $.fn.removeBox = function(){
+  $.fn.removeBox = function () {
     var button = $($.AdminLTE.boxWidget.selectors.remove, this);
     $.AdminLTE.boxWidget.remove(button);
   };
